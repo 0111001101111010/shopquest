@@ -1,12 +1,16 @@
 var r = require('request');
 var config = require('./config.json');
 
-var url = "http://api.yummly.com/v1/api/recipes?&" + "_app_id=" + config.appid +"&_app_key="+ config.appkey;
-console.log(url);
-r.get(url, function (err, res, body) {
+var opts = {
+    headers: {
+      "X-Yummly-App-ID": config.appid,
+      "X-Yummly-App-Key": config.appkey
+    }
+};
+
+r.get("http://api.yummly.com/v1/api/recipes", opts, function (err, res, body) {
       if (!err && res.statusCode === 200) {
         var info = JSON.parse(body);
         console.log(info);
     }
-    console.log(body);
 });
